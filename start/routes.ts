@@ -20,6 +20,20 @@
 
 import Route from '@ioc:Adonis/Core/Route'
 
-Route.get('/', async () => {
-  return { hello: 'world' }
-})
+Route.get('/health', 'HealthController.HealthCheck')
+Route.post('/auth', 'AuthController.Authenticate')
+Route.post('/logout', 'AuthController.Logout').middleware(['auth'])
+
+Route.group(() => {
+  Route.get('', 'UserController.List')
+  Route.post('', 'UserController.AddUser')
+  Route.put('/change-active', 'UserController.ChangeUserStatus')
+}).prefix('/user').middleware(['auth'])
+
+Route.group(() => {
+  Route.get('', 'FeatureFlagController.List')
+  Route.post('', 'FeatureFlagController.AddFeatureFlag')
+  Route.get('/:number', 'FeatureFlagController.GetFeatureFlag').where('number', { match: /^[0-9]+$/, cast: (number) => Number(number) })
+  Route.put('/change-active', 'FeatureFlagController.ChangeFeatureFlagStatus')
+}).prefix('/feature-flag').middleware(['auth'])
+
