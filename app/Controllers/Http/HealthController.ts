@@ -1,8 +1,6 @@
-import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-
 export default class HealthController {
 
-	public async HealthCheck({}: HttpContextContract) {
+	public async HealthCheck({}) {
 		return { status: 200 }
 	}
 }

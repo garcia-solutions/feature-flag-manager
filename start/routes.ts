@@ -33,7 +33,8 @@ Route.group(() => {
 Route.group(() => {
   Route.get('', 'FeatureFlagController.List')
   Route.post('', 'FeatureFlagController.AddFeatureFlag')
-  Route.get('/:number', 'FeatureFlagController.GetFeatureFlag').where('number', { match: /^[0-9]+$/, cast: (number) => Number(number) })
+  Route.get('/:number', 'FeatureFlagController.GetFeatureFlag').where('number', { match: /^[\d]+$/, cast: (number) => Number(number) })
+  Route.delete('/:number', 'FeatureFlagController.DeleteFeatureFlag').where('number', { match: /^[\d]/, cast: (number) => Number(number) })
   Route.put('/change-active', 'FeatureFlagController.ChangeFeatureFlagStatus')
 }).prefix('/feature-flag').middleware(['auth'])
 

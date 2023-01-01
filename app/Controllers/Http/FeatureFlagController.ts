@@ -46,4 +46,13 @@ export default class FeatureFlagController {
         }
 
     }
+
+    public async DeleteFeatureFlag({ params, response }) {
+        try {
+            await this.featureFlagService.deleteFeatureFlag(params.number)
+            return response.ok({ status: 200 })
+        } catch {
+            return response.badRequest ({ status: 404 })
+        }
+    }
 }

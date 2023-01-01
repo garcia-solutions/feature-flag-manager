@@ -3,8 +3,13 @@ import FeatureFlag from "App/Models/FeatureFlag"
 
 export default class FeatureFlagService {
     
-    public async getFeatureFlag(number: number) {
-        return await FeatureFlag.findBy('number', number);
+    public async getFeatureFlag(number: number): Promise<FeatureFlag> {
+        return await FeatureFlag.findByOrFail('number', number);
+    }
+
+    public async deleteFeatureFlag(number: number): Promise<void> {
+        let featureFlag = await FeatureFlag.findByOrFail('number', number);
+        await featureFlag.delete()
     }
     
     public async listFeatureFlags(): Promise<FeatureFlag[]> {

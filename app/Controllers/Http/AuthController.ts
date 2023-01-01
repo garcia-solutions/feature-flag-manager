@@ -13,7 +13,7 @@ export default class AuthController {
                 .where('active', true)
                 .firstOrFail()
                 
-            const token = await auth.use('api').generate(user, { expiresIn: `${3000}seconds` })
+            const token = await auth.use('api').generate(user, { expiresIn: `${300}seconds` })
             return response.ok({ status: 200, message: "User authorized", token: token })
           } catch {
             return response.unauthorized({ message: 'Invalid credentials' })
